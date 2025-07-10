@@ -6,6 +6,8 @@ import {
 } from '@nestjs/platform-fastify';
 import helmet from '@fastify/helmet';
 
+const port = process.env.PORT ?? 3333;
+
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
@@ -14,6 +16,8 @@ async function bootstrap() {
 
   await app.register(helmet);
 
-  await app.listen(process.env.PORT ?? 3333, '0.0.0.0');
+  await app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port: ${port}`);
+  });
 }
 void bootstrap();
