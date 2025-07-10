@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Result } from '../../shared/result';
 import { Rank } from 'src/domain';
-import { RankDocument } from '../schemas';
+import { RankDocument } from '../database';
 
 @Injectable()
 export class RankRepository {
