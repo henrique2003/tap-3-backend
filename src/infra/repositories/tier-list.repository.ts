@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserDocument } from '../schemas/user.schema';
 import { Result } from '../../shared/result';
-import { UserMapper } from '../mappers';
+import { UserMapper, UserDocument } from '../database';
 import { TierListDto } from 'src/domain/dtos';
 
 @Injectable()

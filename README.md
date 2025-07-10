@@ -6,7 +6,7 @@ NestJS backend for TAP-3 project.
 
 ## To-dos
 
-- [ ] CORS
+- [ ] Rate Limit
 - [ ] Authenticacao para usuario de servico
 - [ ] Criar Banco MongoDB de PRD
 - [ ] Configurar Schemas do banco
