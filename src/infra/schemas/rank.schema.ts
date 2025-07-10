@@ -6,6 +6,9 @@ export interface RankDocument extends Document {
   name: string;
   startValue: number;
   endValue: number;
+  color: string;
+  receivePoints: number;
+  deductionPoints: number;
 }
 
 export const RankSchema = new Schema<RankDocument>(
@@ -22,6 +25,19 @@ export const RankSchema = new Schema<RankDocument>(
       required: true,
     },
     endValue: {
+      type: Number,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    receivePoints: {
+      type: Number,
+      required: true,
+    },
+    deductionPoints: {
       type: Number,
       required: true,
     },

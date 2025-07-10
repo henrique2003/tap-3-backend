@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Result } from '../../../../shared/result';
-import { User } from 'src/domain';
+import { Rank, User } from 'src/domain';
 import { UpdateUserSchema } from './update-user.dto';
 import { RankRepository, UserRepository } from 'src/infra/repositories';
 import { ZError } from 'src/utils';
@@ -32,43 +32,29 @@ export class UpdateUserUseCase {
       return Result.failure('User not found.');
     }
 
-    const lastRankValue: number = userData.points.value;
-    if (lastRankValue && lastRankValue > userData.points.rank.endValue) {
-      const newRank = await this.rankRepository.getNextRank(
-        userData.points.rank,
-      );
-      if (newRank.isFailure()) {
-        return Result.failure(newRank.getError());
-      }
+    if (resultData.data.game) {
+      const nextRankPromise: Promise<Result<Rank>> =
+        this.rankRepository.getNextRank(userData.points.rank);
+      const previousRankPromise: Promise<Result<Rank>> =
+        this.rankRepository.getPreviousRank(userData.points.rank);
 
-      userData.update({
-        ...resultData.data,
-        points: {
-          rank: newRank.getValue(),
-          value: lastRankValue,
+      const [nextRank, previousRank] = await Promise.all([
+        nextRankPromise,
+        previousRankPromise,
+      ]);
+
+      userData.gameUpdate({
+        game: resultData.data.game,
+        rank: {
+          previousRank: previousRank.isSuccess()
+            ? previousRank.getValue()
+            : null,
+          nextRank: nextRank.isSuccess() ? nextRank.getValue() : null,
         },
       });
-    } else if (
-      lastRankValue &&
-      lastRankValue < userData.points.rank.startValue
-    ) {
-      const newRank = await this.rankRepository.getPreviousRank(
-        userData.points.rank,
-      );
-      if (newRank.isFailure()) {
-        return Result.failure(newRank.getError());
-      }
-
-      userData.update({
-        ...resultData.data,
-        points: {
-          rank: newRank.getValue(),
-          value: lastRankValue,
-        },
-      });
-    } else {
-      userData.update(resultData.data);
     }
+
+    userData.update(resultData.data);
 
     const updateUser = await this.userRepository.updateUser(user.getValue()!);
     if (updateUser.isFailure()) {
