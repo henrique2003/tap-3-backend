@@ -6,7 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import helmet from '@fastify/helmet';
 
-const port = process.env.PORT ?? 3333;
+const port = Number(process.env.PORT);
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
