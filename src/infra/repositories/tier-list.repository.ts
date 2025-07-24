@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Result } from '../../shared/result';
-import { UserMapper, UserDocument } from '../database';
+import { UserDocument } from '../database';
 import { TierListDto } from 'src/domain/dtos';
 
 @Injectable()
@@ -11,24 +11,33 @@ export class TierListRepository {
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async getAll(): Promise<Result<TierListDto[]>> {
+  async getAll(page: number = 1): Promise<Result<TierListDto[]>> {
     try {
-      const users = await this.userModel.find({}, null, {
-        sort: { 'rank.value': -1 },
-      });
+      const limit = 20;
+      const skip = (page - 1) * limit;
 
-      const domainUsers = UserMapper.toDomainList(users);
+      const users = await this.userModel
+        .find({}, null, {
+          sort: { 'points.value': -1 },
+          limit,
+          skip,
+        })
+        .populate('points.rank')
+        .lean();
 
-      const tierList = domainUsers.map(
+      const tierList = users.map(
         (user) =>
           ({
             id: user.id,
             username: user.username,
-            rank: user.points.value,
+            rank: {
+              value: user.points.value,
+              color: user.points.rank.color,
+            },
           }) satisfies TierListDto,
       );
 
-      return Result.success(tierList);
+      return Result.success(await Promise.all(tierList));
     } catch (error) {
       return Result.failure('Error to find tier list: ' + error);
     }

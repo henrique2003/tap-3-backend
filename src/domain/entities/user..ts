@@ -71,8 +71,6 @@ export class User {
     const currentRank: Rank = this.points.rank;
 
     if (game?.win) {
-      this.points.value += this.points.rank.receivePoints;
-
       this.games.wins++;
       this.games.total++;
 
@@ -82,6 +80,8 @@ export class User {
       ) {
         this.points.rank = rank.nextRank;
       }
+
+      this.points.value += this.points.rank.receivePoints;
     } else if (game?.lose) {
       if (this.points.value - this.points.rank.deductionPoints < 0) {
         this.points.value = 0;

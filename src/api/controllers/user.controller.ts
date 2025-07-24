@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common';
 import { UpdateUserUseCase } from 'src/application/usecases';
 import { CreateUserUseCase } from 'src/application/usecases/users/create-user/create-user.usecase';
 import { GetUserByIdUseCase } from 'src/application/usecases/users/get-user-by-id/get-user-by-id.usecase';
+import { FastifyReply } from 'fastify';
 
 @Controller('user')
 export class UserController {
@@ -12,32 +22,42 @@ export class UserController {
   ) {}
 
   @Post('create')
-  async create(@Body() input: object) {
+  async create(@Body() input: object, @Res() reply: FastifyReply) {
     const result = await this.createUserUseCase.execute(input);
     if (result.isFailure()) {
-      return { error: result.getError() };
+      return reply.status(HttpStatus.BAD_REQUEST).send({
+        error: result.getError(),
+      });
     }
 
-    return result.getValue();
+    return reply.status(HttpStatus.CREATED).send(result.getValue());
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string) {
+  async getById(@Param('id') id: string, @Res() reply: FastifyReply) {
     const result = await this.getUserByIdUseCase.execute({ id });
     if (result.isFailure()) {
-      return { error: result.getError() };
+      return reply.status(HttpStatus.NOT_FOUND).send({
+        error: result.getError(),
+      });
     }
 
-    return result.getValue();
+    return reply.status(HttpStatus.OK).send(result.getValue());
   }
 
-  @Put('update/:id')
-  async update(@Body() input: object, @Param('id') id: string) {
+  @Put(':id')
+  async update(
+    @Body() input: object,
+    @Param('id') id: string,
+    @Res() reply: FastifyReply,
+  ) {
     const result = await this.updateUserUseCase.execute({ id, ...input });
     if (result.isFailure()) {
-      return { error: result.getError() };
+      return reply.status(HttpStatus.NOT_FOUND).send({
+        error: result.getError(),
+      });
     }
 
-    return result.getValue();
+    return reply.status(HttpStatus.OK).send(result.getValue());
   }
 }

@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Result } from '../../shared/result';
 import { UserMapper, UserDocument } from '../database';
-import { TierListDto } from 'src/domain/dtos';
 import { User } from 'src/domain';
 
 @Injectable()
@@ -11,29 +10,6 @@ export class UserRepository {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
   ) {}
-
-  async getTierList(): Promise<Result<TierListDto[]>> {
-    try {
-      const users = await this.userModel.find({}, null, {
-        sort: { 'rank.value': -1 },
-      });
-
-      const domainUsers = UserMapper.toDomainList(users);
-
-      const tierList = domainUsers.map(
-        (user) =>
-          ({
-            id: user.id,
-            username: user.username,
-            rank: user.points.value,
-          }) satisfies TierListDto,
-      );
-
-      return Result.success(tierList);
-    } catch (error) {
-      return Result.failure('Error to find tier list: ' + error);
-    }
-  }
 
   async getUserByUsername(username: string): Promise<Result<User | null>> {
     try {
@@ -80,6 +56,10 @@ export class UserRepository {
           { _id: user.id },
           {
             ...user,
+            points: {
+              ...user.points,
+              rank: user.points.rank.id,
+            },
           },
           {
             new: true,

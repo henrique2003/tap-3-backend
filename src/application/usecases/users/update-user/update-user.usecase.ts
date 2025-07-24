@@ -4,6 +4,7 @@ import { Rank, User } from 'src/domain';
 import { UpdateUserSchema } from './update-user.dto';
 import { RankRepository, UserRepository } from 'src/infra/repositories';
 import { ZError } from 'src/utils';
+import { UserRankDto } from 'src/application/dtos';
 
 @Injectable()
 export class UpdateUserUseCase {
@@ -12,7 +13,7 @@ export class UpdateUserUseCase {
     private readonly rankRepository: RankRepository,
   ) {}
 
-  async execute(input: unknown): Promise<Result<User>> {
+  async execute(input: unknown): Promise<Result<UserRankDto>> {
     const resultData = UpdateUserSchema.safeParse(input);
     if (resultData.error) {
       if (ZError.create(resultData.error).errors.length > 0) {
@@ -31,6 +32,9 @@ export class UpdateUserUseCase {
     if (!userData || userData === null) {
       return Result.failure('User not found.');
     }
+
+    const previousValue: number = userData.points.value;
+    const previousRank: Rank = userData.points.rank;
 
     if (resultData.data.game) {
       const nextRankPromise: Promise<Result<Rank>> =
@@ -61,6 +65,15 @@ export class UpdateUserUseCase {
       return Result.failure(updateUser.getError());
     }
 
-    return Result.success(updateUser.getValue());
+    const userRankDto: UserRankDto = {
+      ...updateUser.getValue(),
+      points: {
+        ...userData.points,
+        previousValue,
+        previousRank,
+      },
+    };
+
+    return Result.success(userRankDto);
   }
 }
