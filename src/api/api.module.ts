@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TierListController, UserController } from './controllers';
-import { UseCasesModule } from 'src/application/usecases.module';
+import { UseCasesModule } from '../../src/application/usecases.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ApiKeyGuard } from './guards/api-key.guard';
 

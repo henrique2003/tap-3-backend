@@ -1,5 +1,5 @@
 import { Controller, Get, HttpStatus, Query, Res } from '@nestjs/common';
-import { GetTierListUseCase } from 'src/application/usecases';
+import { GetTierListUseCase } from '../../../src/application/usecases';
 import { Response } from 'express';
 
 @Controller('tier-list')

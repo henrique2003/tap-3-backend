@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": ".",
+    "strictPropertyInitialization": false
+  },
+  "include": ["api/index.ts"],
+  "exclude": ["node_modules", "src"]
+}

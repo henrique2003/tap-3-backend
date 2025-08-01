@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Result } from '../../../../shared/result';
-import { User } from 'src/domain';
+import { User } from '../../../../../src/domain';
 import { GetUserByIdSchema } from './get-user-by-id.dto';
-import { UserRepository } from 'src/infra/repositories';
-import { ZError } from 'src/utils';
+import { UserRepository } from '../../../../../src/infra/repositories';
+import { ZError } from '../../../../../src/utils';
 
 @Injectable()
 export class GetUserByIdUseCase {

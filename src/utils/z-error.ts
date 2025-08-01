@@ -3,7 +3,7 @@ import { ZodError } from 'zod';
 export class ZError {
   constructor(public readonly errors: string[]) {}
 
-  static create(result): ZError {
+  static create(result: any): ZError {
     const errors: string[] = [];
 
     if (result instanceof ZodError) {

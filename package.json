@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "nest build",
+    "build:vercel-api": "tsc -p tsconfig.vercel-api.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -34,7 +35,6 @@
     "@nestjs/platform-express": "^11.1.5",
     "@nestjs/platform-fastify": "^11.1.3",
     "@nestjs/throttler": "^6.4.0",
-    "@vendia/serverless-express": "^4.12.6",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "mongoose": "^8.16.2",

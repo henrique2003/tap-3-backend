@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Result } from '../../shared/result';
 import { UserDocument } from '../database';
-import { TierListDto } from 'src/domain/dtos';
+import { TierListDto } from '../../../src/domain/dtos';
 
 @Injectable()
 export class TierListRepository {

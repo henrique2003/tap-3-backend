@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Result } from '../../../../shared/result';
-import { Rank, User } from 'src/domain';
+import { Rank, User } from '../../../../../src/domain';
 import { UpdateUserSchema } from './update-user.dto';
-import { RankRepository, UserRepository } from 'src/infra/repositories';
-import { ZError } from 'src/utils';
-import { UserRankDto } from 'src/application/dtos';
+import {
+  RankRepository,
+  UserRepository,
+} from '../../../../../src/infra/repositories';
+import { ZError } from '../../../../../src/utils';
+import { UserRankDto } from '../../../../../src/application/dtos';
 
 @Injectable()
 export class UpdateUserUseCase {

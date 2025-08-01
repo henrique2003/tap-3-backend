@@ -1,4 +1,4 @@
-import { Rank } from 'src/domain';
+import { Rank } from '../../../src/domain';
 
 export class UserRankDto {
   public id: string;

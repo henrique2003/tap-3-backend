@@ -3,7 +3,6 @@ import { AppModule } from '../src/app.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express from 'express';
 import helmet from 'helmet';
-import serverlessExpress from '@vendia/serverless-express';
 
 let cachedServer: any;
 
@@ -16,7 +15,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, adapter);
   await app.init();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-  return serverlessExpress({ app: expressApp });
+  return expressApp;
 }
 
 export default async function handler(req: any, res: any) {
@@ -28,8 +27,8 @@ export default async function handler(req: any, res: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
     return cachedServer(req, res);
   } catch (error) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const errorLog = error?.message ?? error;
-    console.error(errorLog);
+    console.error(error);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    res.status(500).send('Internal Server Error');
   }
 }
