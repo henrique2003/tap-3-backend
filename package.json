@@ -5,7 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "ëngine": {
+  "engines": {
     "node": "18.x"
   },
   "scripts": {
