@@ -8,9 +8,9 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { UpdateUserUseCase } from '../../../src/application/usecases';
-import { CreateUserUseCase } from '../../../src/application/usecases/users/create-user/create-user.usecase';
-import { GetUserByIdUseCase } from '../../../src/application/usecases/users/get-user-by-id/get-user-by-id.usecase';
+import { UpdateUserUseCase } from '@application/usecases';
+import { CreateUserUseCase } from '@application/usecases/users/create-user/create-user.usecase';
+import { GetUserByIdUseCase } from '@application/usecases/users/get-user-by-id/get-user-by-id.usecase';
 import { Response } from 'express';
 
 @Controller('user')

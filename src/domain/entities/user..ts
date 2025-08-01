@@ -1,4 +1,4 @@
-import { Result } from '../../../src/shared/result';
+import { Result } from '@shared/result';
 import { Rank } from './rank';
 
 export class User {

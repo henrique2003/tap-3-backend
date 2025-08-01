@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { TierListDto } from '../../../../../src/domain';
-import { TierListRepository } from '../../../../../src/infra/repositories';
-import { Result } from '../../../../../src/shared/result';
+import { TierListDto } from '@domain/index';
+import { TierListRepository } from '@infra/repositories';
+import { Result } from '@shared/result';
 import { GetListSchema } from './get-tier-list.dto';
-import { ZError } from '../../../../../src/utils';
+import { ZError } from '@utils/index';
 
 @Injectable()
 export class GetTierListUseCase {

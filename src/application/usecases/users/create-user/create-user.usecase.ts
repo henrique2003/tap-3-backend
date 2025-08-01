@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Result } from '../../../../shared/result';
-import { User } from '../../../../../src/domain';
+import { Result } from '@shared/result';
+import { User } from '@domain/index';
 import { CriarUserSchema } from './create-user.dto';
-import {
-  RankRepository,
-  UserRepository,
-} from '../../../../../src/infra/repositories';
-import { ZError } from '../../../../../src/utils';
+import { RankRepository, UserRepository } from '@infra/repositories';
+import { ZError } from '@utils/index';
 
 @Injectable()
 export class CreateUserUseCase {

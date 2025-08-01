@@ -1,4 +1,4 @@
-import { User } from '../../../../src/domain';
+import { User } from '@domain/index';
 import { UserDocument } from '../schemas/user.schema';
 
 export class UserMapper {

@@ -10,7 +10,6 @@
   },
   "scripts": {
     "build": "nest build",
-    "build:vercel-api": "tsc -p tsconfig.vercel-api.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
