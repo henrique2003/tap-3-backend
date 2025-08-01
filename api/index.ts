@@ -20,10 +20,16 @@ async function bootstrap() {
 }
 
 export default async function handler(req: any, res: any) {
-  if (!cachedServer) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    cachedServer = await bootstrap();
+  try {
+    if (!cachedServer) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      cachedServer = await bootstrap();
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+    return cachedServer(req, res);
+  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const errorLog = error?.message ?? error;
+    console.error(errorLog);
   }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-  return cachedServer(req, res);
 }
