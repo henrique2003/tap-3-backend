@@ -11,7 +11,7 @@ import {
 import { UpdateUserUseCase } from 'src/application/usecases';
 import { CreateUserUseCase } from 'src/application/usecases/users/create-user/create-user.usecase';
 import { GetUserByIdUseCase } from 'src/application/usecases/users/get-user-by-id/get-user-by-id.usecase';
-import { FastifyReply } from 'fastify';
+import { Response } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -22,7 +22,7 @@ export class UserController {
   ) {}
 
   @Post('create')
-  async create(@Body() input: object, @Res() reply: FastifyReply) {
+  async create(@Body() input: object, @Res() reply: Response) {
     const result = await this.createUserUseCase.execute(input);
     if (result.isFailure()) {
       return reply.status(HttpStatus.BAD_REQUEST).send({
@@ -34,7 +34,7 @@ export class UserController {
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string, @Res() reply: FastifyReply) {
+  async getById(@Param('id') id: string, @Res() reply: Response) {
     const result = await this.getUserByIdUseCase.execute({ id });
     if (result.isFailure()) {
       return reply.status(HttpStatus.NOT_FOUND).send({
@@ -49,7 +49,7 @@ export class UserController {
   async update(
     @Body() input: object,
     @Param('id') id: string,
-    @Res() reply: FastifyReply,
+    @Res() reply: Response,
   ) {
     const result = await this.updateUserUseCase.execute({ id, ...input });
     if (result.isFailure()) {

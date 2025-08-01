@@ -1,6 +1,6 @@
 import { Controller, Get, HttpStatus, Query, Res } from '@nestjs/common';
 import { GetTierListUseCase } from 'src/application/usecases';
-import { FastifyReply } from 'fastify';
+import { Response } from 'express';
 
 @Controller('tier-list')
 export class TierListController {
@@ -8,7 +8,7 @@ export class TierListController {
 
   @Get()
   async getTierList(
-    @Res() reply: FastifyReply,
+    @Res() reply: Response,
     @Query() { page }: { page: string },
   ) {
     const result = await this.getTierListUseCase.execute({
@@ -20,6 +20,6 @@ export class TierListController {
       });
     }
 
-    return reply.status(HttpStatus.CREATED).send(result.getValue());
+    return reply.status(HttpStatus.OK).send(result.getValue());
   }
 }
