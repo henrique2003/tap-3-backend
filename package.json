@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "ëngine": {
-    "node": "18"
+    "node": "18.x"
   },
   "scripts": {
     "build": "nest build",
