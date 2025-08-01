@@ -8,9 +8,9 @@
     "strict": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "outDir": ".",
+    "outDir": "dist",
     "strictPropertyInitialization": false
   },
-  "include": ["api/index.ts"],
-  "exclude": ["node_modules", "src"]
+  "include": ["src", "api"],
+  "exclude": ["node_modules", "dist"]
 }
