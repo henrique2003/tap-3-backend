@@ -14,16 +14,15 @@ async function bootstrap() {
   const adapter = new ExpressAdapter(expressApp);
   const app = await NestFactory.create(AppModule, adapter);
   await app.init();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
   return expressApp;
 }
 
 export default async function handler(req: any, res: any) {
   try {
     if (!cachedServer) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       cachedServer = await bootstrap();
     }
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
     return cachedServer(req, res);
   } catch (error) {

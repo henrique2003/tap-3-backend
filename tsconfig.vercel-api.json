@@ -11,6 +11,6 @@
     "outDir": "dist",
     "strictPropertyInitialization": false
   },
-  "include": ["src", "api"],
+  "include": ["api"],
   "exclude": ["node_modules", "dist"]
 }
