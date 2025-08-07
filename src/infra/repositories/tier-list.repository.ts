@@ -28,7 +28,8 @@ export class TierListRepository {
       const tierList = users.map(
         (user) =>
           ({
-            id: user.id,
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
+            id: user._id?.toString() ?? '',
             username: user.username,
             rank: {
               value: user.points.value,

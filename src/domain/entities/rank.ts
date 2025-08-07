@@ -1,3 +1,5 @@
+import { BotOpponent } from '@domain/enums/bot-opponent';
+
 export class Rank {
   constructor(
     public readonly id: string,
@@ -7,5 +9,6 @@ export class Rank {
     public readonly receivePoints: number,
     public readonly deductionPoints: number,
     public readonly color: string,
+    public readonly botOpponent: BotOpponent,
   ) {}
 }

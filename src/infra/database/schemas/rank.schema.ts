@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { BotOpponent } from '@domain/enums/bot-opponent';
 import { Schema, Document } from 'mongoose';
 
 export interface RankDocument extends Document {
@@ -9,6 +9,7 @@ export interface RankDocument extends Document {
   color: string;
   receivePoints: number;
   deductionPoints: number;
+  botOpponent: BotOpponent;
 }
 
 export const RankSchema = new Schema<RankDocument>(
@@ -41,13 +42,17 @@ export const RankSchema = new Schema<RankDocument>(
       type: Number,
       required: true,
     },
+    botOpponent: {
+      type: Number,
+      enum: [BotOpponent.Easy, BotOpponent.Normal, BotOpponent.Hard],
+      required: true,
+    },
   },
   {
     timestamps: true,
     toJSON: {
       virtuals: true,
       transform: (_, ret) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         ret.id = (ret as any)._id?.toString() as string;
 
         delete (ret as any)._id;

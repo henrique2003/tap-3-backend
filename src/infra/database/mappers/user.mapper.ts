@@ -18,6 +18,7 @@ export class UserMapper {
           receivePoints: user.points.rank.receivePoints,
           deductionPoints: user.points.rank.deductionPoints,
           color: user.points.rank.color,
+          botOpponent: user.points.rank.botOpponent,
         },
         value: user.points.value,
       },
